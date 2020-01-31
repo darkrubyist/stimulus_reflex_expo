@@ -1,0 +1,12 @@
+<%= content_tag :div, class: 'nested-fields', data: { new_record: form.object.new_record? } do %>
+  <div class="form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title,  class: 'form-control form-control-lg' %>
+  </div>
+
+  <div class="form-group">
+    <a  href="#" 
+    		data-reflex="<%= form.object.new_record? ? 'click->NestedTagsReflex#remove_restaurant' : 'click->NestedTagsReflex#remove_existing_restaruant' %>" 
+        data-restaurant="<%= form.object.new_record? ? time : form.object.id %>">Remove</a>    
+  </div>
+<% end %>

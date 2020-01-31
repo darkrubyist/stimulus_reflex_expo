@@ -14,6 +14,10 @@
 #
 
 class Restaurant < ApplicationRecord
+
+	has_many :restaurant_menus, inverse_of: :restaurant, dependent: :destroy
+	accepts_nested_attributes_for :restaurant_menus, reject_if: :all_blank, allow_destroy: true
+
   scope :search, ->(query) {
     query = sanitize_sql_like(query)
     where(arel_table[:name].matches("%#{query}%"))

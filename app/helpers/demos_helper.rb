@@ -12,6 +12,7 @@ module DemosHelper
       tabular
       todo
       validation
+      nested_fields
     ]
   end
 

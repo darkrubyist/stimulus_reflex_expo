@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resource :tabular, only: [:show]
     resource :todo, only: [:show]
     resource :validation, only: [:show]
+    resource :nested_fields
   end
 
   resources :demos, only: [:index]

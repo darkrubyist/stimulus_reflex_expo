@@ -1,0 +1,54 @@
+<div class="col-6">
+  <h3>New Restaurant</h3>
+</div>
+
+<%= form_with(model: @restaurant, url: nested_fields_path, id: "article_form", class:'mt-4') do |f| %>
+  <div class="col-6 form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control form-control-lg", data: { reflex_permanent: true } %>
+  </div>
+
+  <div class="col-6 form-group">
+    <%= f.label :stars %>
+    <%= f.number_field :stars, class: "form-control form-control-lg", data: { reflex_permanent: true } %>
+  </div>
+
+  <div class="col-6 form-group">
+    <%= f.label :price %>
+    <%= f.number_field :price, class: "form-control form-control-lg", data: { reflex_permanent: true } %>
+  </div>
+
+  <div class="col-6 form-group">
+    <%= f.label :category %>
+    <%= f.text_field :category, class: "form-control form-control-lg", data: { reflex_permanent: true } %>
+  </div>
+  
+  <div class="col-6 form-group mt-4">
+      <h3>Menus</h3>
+
+      <% if @restaurant.restaurant_menus.any? %>
+        <div class="card p-3 mb-4">
+          <%= f.fields_for :restaurant_menus do |form| %>
+            <%= render 'nested_fields/restaurant_menu_fields', form: form %>
+          <% end %>
+        </div>
+      <% end %>
+      
+      <%= @restaurants_menus %>
+      <% @restaurants_menus.to_a.each_with_index do |time, i| %>
+        <div class="card p-3 mb-4 <%= time %>">
+          <%= f.fields_for :restaurant_menus, RestaurantMenu.new, child_index: "#{time}" do |form| %>
+            <%= render 'nested_fields/restaurant_menu_fields', form: form, time: time %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <a  href="#" class="btn btn-secondary btn-sm" 
+          data-reflex="click->NestedTagsReflex#add_restaurant" 
+          data-restaurant="<%= rand(100000..999999) %>">Add Menu</a>
+  </div>
+
+  <div class="col-6 form-group mt-4">
+    <%= f.submit "Submit" , class: "btn btn-lg btn-primary" %>
+  </div>
+<% end %>
