@@ -1,0 +1,45 @@
+    <% if @menu %>
+        <div data-controller="navigations" 
+            class="modal text-left " 
+            tabindex="-1" 
+            data-action="click->navigations#closeBackground keyup@window->navigations#closeWithKeyboard"
+            style="display:block">
+            <div class="modal-dialog d-flex h-100 justify-content-center align-items-center">
+                <div class="modal-content mb-5">
+                    <!--  -->
+
+                    <%= form_with(model: @menu, url: navigations_path, html: { data: { action: "ajax:success->navigations#set_active" } }) do |f| %>
+                        <div class="modal-header">
+                            <h5 class="modal-title">New Menu</h5>
+                            <button type="button" class="close" 
+                            data-reflex="click->MenuReflex#noop"><span>&times;</span></button>
+                        </div>
+                    
+                        <div class="modal-body">
+                            <div class="form-group ">
+                                <%= f.label :title %>
+                                <%= f.text_field :title, class: 'form-control', 
+                                    autocomplete: 'off', placeholder: 'Your menu title',
+                                    data: { 
+                                        target: "navigations.title", 
+                                        reflex: "input->MenuReflex#set_slug" 
+                                    } %>
+                            </div>
+
+                            <div class="form-group ">
+                                <%= f.label :slug %>
+                                <%= f.text_field :slug,  autocomplete: 'off',
+                                        class: 'form-control',
+                                        placeholder: @slug %>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                          <%= f.submit "Save", class: "btn btn-primary"  %>
+                            <button type="button" class="btn btn-link" data-reflex="click->MenuReflex#noop">Cancel</button>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    <% end %>

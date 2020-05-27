@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: menus
+#
+#  id         :bigint           not null, primary key
+#  slug       :string
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  session_id :string
+#
+
+one:
+  title: MyString
+  slug: MyString
+  session_id: MyString
+
+two:
+  title: MyString
+  slug: MyString
+  session_id: MyString

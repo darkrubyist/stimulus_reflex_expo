@@ -1,0 +1,57 @@
+<div class="bg-white rounded shadow d-flex " style="min-height: 50vh;max-height: 50vh;">
+    <div class="d-flex flex-column   border-right" style="width: 200px;min-width: 200px;">
+        <div class="p-2 text-center border-bottom">
+            <h5 class="modal-title">Your Menus</h5>
+        </div>
+        <div class="d-flex flex-column  overflow-auto h-100">
+
+            <% if @menus.exists? %>
+                <% @menus.each do |menu| %>
+                    <% is_active_menu = @active_menu && @active_menu.id == menu.id %>
+                    <a  <% if controller.action_name == 'index'%>data-reflex="<%= is_active_menu ? 'click->MenuReflex#noop' : 'click->MenuReflex#active_menu' %>" <% end %>
+                        <% if controller.action_name == 'show' %>href='<%= is_active_menu ?  '/demos/navigations' : "/demos/navigations/#{menu.slug}" %>'<% end %>
+                        
+                        data-id="<%= menu.id %>" 
+                        class="d-flex justify-content-between text-left btn btn-link rounded-0 <%= @active_menu && @active_menu.id == menu.id ? 'bg-primary text-white' : 'btn-outline-light' %>">
+                        
+                        <%= menu.title %>
+                        <% if @active_menu && @active_menu.id == menu.id %>
+                            <span>&times;</span>
+                        <% end %>
+                    </a>
+                <% end %>
+            <% else %>
+            <p class="text-center p-3">
+                Create your first menu
+            </p>
+            <% end %>
+        </div>
+        <button class="btn btn-primary rounded-0" 
+                data-reflex="click->MenuReflex#new_menu">
+            New Menu
+        </button>
+    </div>
+
+    <div class="flex-fill">
+               
+
+        <% if @active_menu %>
+            <div data-controller="navigations" class="pl-3 pr-3 p-2  d-flex  border-bottom justify-content-between align-items-center">
+                <h5 data-target="navigations.title" class="modal-title"><%= @active_menu.title %> <small>(<%= @active_menu.slug %>)</small></h5>
+                <button type="button" data-reflex="click->MenuReflex#destroy_menu" data-id="<%= @active_menu.id %>" class="close ">
+                    <svg style="width: 20px; height: 20px;" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+            </div>
+        <% else %>
+            <div class="align-items-center d-flex h-100 justify-content-center"
+                    style="background-position: center;background: url(https://uploads-ssl.webflow.com/5bcb5ee81fb2091a2ec550c7/5deecfd07b382e0c7f49a754_recipe-01-export-v0.2.png);background-size: cover;background-repeat: no-repeat;">
+                <button class="btn btn-primary rounded-0" 
+                        data-reflex="click->MenuReflex#new_menu">
+                    New Menu
+                </button>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+ <%= render 'new_modal' %>
